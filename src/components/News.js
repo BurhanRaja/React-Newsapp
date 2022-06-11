@@ -15,7 +15,7 @@ export class News extends Component {
 
     // Fetching API
     async componentDidMount() {
-        const url = "http://newsapi.org/v2/top-headlines?country=in&apiKey=c9466095a2a64318b0de82a3efff2cc3&page=1"
+        const url = "http://newsapi.org/v2/top-headlines?country=in&apiKey=apikey&page=1"
         let data = await fetch(url)
         let parsedData = await data.json()
         this.setState({
@@ -26,7 +26,7 @@ export class News extends Component {
 
     // Previous Button
     handlePrevClick = async () => {
-        const url = `http://newsapi.org/v2/top-headlines?country=in&apiKey=c9466095a2a64318b0de82a3efff2cc3&page=${this.state.page-1}`
+        const url = `http://newsapi.org/v2/top-headlines?country=in&apiKey=apikey&page=${this.state.page-1}`
         let data = await fetch(url)
         let parsedData = await data.json()
         this.setState({
@@ -37,7 +37,7 @@ export class News extends Component {
     
     // Next Button
     handleNextClick = async () => {
-        const url = `http://newsapi.org/v2/top-headlines?country=in&apiKey=c9466095a2a64318b0de82a3efff2cc3&page=${this.state.page+1}&pageSize=20`
+        const url = `http://newsapi.org/v2/top-headlines?country=in&apiKey=apikey&page=${this.state.page+1}&pageSize=20`
         let data = await fetch(url)
         let parsedData = await data.json()
         this.setState({
