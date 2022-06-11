@@ -20,3 +20,7 @@ I used the above link to get the API and Iused the data given in json format in 
 4. Fetching data from URL using `componentDidMount()`
 
 - `constructor()` loads 1st, `render()` loads 2nd and `componentDidMount()` will load at last.
+
+5. Added Next and Previous button for the News navigation
+
+- The functions created for next and previous button are `handleNextClick()` and `handelPrevClick` respectively.
