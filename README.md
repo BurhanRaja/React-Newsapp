@@ -24,3 +24,5 @@ I used the above link to get the API and Iused the data given in json format in 
 5. Added Next and Previous button for the News navigation
 
 - The functions created for next and previous button are `handleNextClick()` and `handelPrevClick` respectively.
+
+6. Loading Spinner added using some logic

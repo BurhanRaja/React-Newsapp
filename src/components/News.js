@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem';
+import Spinner from './Spinner';
 
 export class News extends Component {
 
@@ -15,34 +16,40 @@ export class News extends Component {
 
     // Fetching API
     async componentDidMount() {
-        const url = "http://newsapi.org/v2/top-headlines?country=in&apiKey=apikey&page=1"
+        const url = `http://newsapi.org/v2/top-headlines?country=in&apiKey=c9466095a2a64318b0de82a3efff2cc3&page=1&pageSize=${this.props.pageSize}`
+        this.setState({loading: true})
         let data = await fetch(url)
         let parsedData = await data.json()
         this.setState({
             articles: parsedData.articles,
-            totalResult: parsedData.totalResults // passed directly in setState
+            totalResult: parsedData.totalResults, // passed directly in setState
+            loading: false
         })
     }
 
     // Previous Button
     handlePrevClick = async () => {
-        const url = `http://newsapi.org/v2/top-headlines?country=in&apiKey=apikey&page=${this.state.page-1}`
+        const url = `http://newsapi.org/v2/top-headlines?country=in&apiKey=c9466095a2a64318b0de82a3efff2cc3&page=${this.state.page-1}&pageSize=${this.props.pageSize}`
+        this.setState({loading: true})
         let data = await fetch(url)
         let parsedData = await data.json()
         this.setState({
             page: this.state.page - 1,
-            articles: parsedData.articles
+            articles: parsedData.articles,
+            loading: false
         })
     }
     
     // Next Button
     handleNextClick = async () => {
-        const url = `http://newsapi.org/v2/top-headlines?country=in&apiKey=apikey&page=${this.state.page+1}&pageSize=20`
+        const url = `http://newsapi.org/v2/top-headlines?country=in&apiKey=c9466095a2a64318b0de82a3efff2cc3&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
+        this.setState({loading: true})
         let data = await fetch(url)
         let parsedData = await data.json()
         this.setState({
             page: this.state.page + 1,
-            articles: parsedData.articles
+            articles: parsedData.articles,
+            loading: false
         })
     }
 
@@ -51,11 +58,12 @@ export class News extends Component {
     render() {
         return (
             <div>
-                <div className="container my-3">
-                    <h1>NewsMonkey - <b>Top Headlines</b></h1>
-                    <div className="row my-4">
+                <div className="container my-5">
+                    <h1 className='text-center'>NewsMonkey - <b>Top Headlines</b></h1>
+                    {this.state.loading && <Spinner/>}
+                    <div className="row my-5">
                         {/* Mapping the url on the page */}
-                        {this.state.articles.map((element)=>{
+                        {!this.state.loading && this.state.articles.map((element)=>{
                         return <div className="col-md-4 my-3" key={element.url}>
                                     <NewsItem title={element.title?element.title.slice(0,45):""} description={element.description?element.description.slice(0,76):""} imageUrl={element.urlToImage} newsUrl={element.url} />
                                 </div>
@@ -67,7 +75,7 @@ export class News extends Component {
                         <button disabled={this.state.page <= 1} className="btn btn-dark" onClick={this.handlePrevClick}>&larr; Previous</button>
 
                         {/* Math.ceil(this.state.totalResult/20) == 2 if (totalResult == 38) */}
-                        <button className="btn btn-dark btn-next" disabled={this.state.page+1 > Math.ceil(this.state.totalResult/20)} onClick={this.handleNextClick}>Next &rarr;</button>
+                        <button className="btn btn-dark btn-next" disabled={this.state.page+1 > Math.ceil(this.state.totalResult/this.props.pageSize)} onClick={this.handleNextClick}>Next &rarr;</button>
                     </div>
                 </div>
             </div>
