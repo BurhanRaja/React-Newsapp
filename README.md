@@ -28,3 +28,5 @@ I used the above link to get the API and Iused the data given in json format in 
 6. Loading Spinner added using some logic
 
 7. Adding category, country and pageSize as props in URL
+
+8. Adding Author's name and Date & Time as a props to display on website
