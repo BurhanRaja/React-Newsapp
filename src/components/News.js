@@ -1,8 +1,22 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem';
 import Spinner from './Spinner';
+import PropTypes from 'prop-types'
 
 export class News extends Component {
+
+    // Props
+    defaultprops = {
+        country: "in",
+        pageSize: 6,
+        category: "general"
+    }
+
+    proptypes = {
+        country: PropTypes.string,
+        pageSize: PropTypes.number,
+        category: PropTypes.string
+    }
 
     // Handling States
     constructor() {
@@ -16,7 +30,7 @@ export class News extends Component {
 
     // Fetching API
     async componentDidMount() {
-        const url = `http://newsapi.org/v2/top-headlines?country=in&apiKey=c9466095a2a64318b0de82a3efff2cc3&page=1&pageSize=${this.props.pageSize}`
+        const url = `http://newsapi.org/v2/top-headlines?country=in&${this.props.category}&apiKey=apikey&page=1&pageSize=${this.props.pageSize}`
         this.setState({loading: true})
         let data = await fetch(url)
         let parsedData = await data.json()
@@ -29,7 +43,7 @@ export class News extends Component {
 
     // Previous Button
     handlePrevClick = async () => {
-        const url = `http://newsapi.org/v2/top-headlines?country=in&apiKey=c9466095a2a64318b0de82a3efff2cc3&page=${this.state.page-1}&pageSize=${this.props.pageSize}`
+        const url = `http://newsapi.org/v2/top-headlines?country=in&${this.props.category}&apiKey=apikey&page=${this.state.page-1}&pageSize=${this.props.pageSize}`
         this.setState({loading: true})
         let data = await fetch(url)
         let parsedData = await data.json()
@@ -42,7 +56,7 @@ export class News extends Component {
     
     // Next Button
     handleNextClick = async () => {
-        const url = `http://newsapi.org/v2/top-headlines?country=in&apiKey=c9466095a2a64318b0de82a3efff2cc3&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
+        const url = `http://newsapi.org/v2/top-headlines?country=in&${this.props.category}&apiKey=apikey&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
         this.setState({loading: true})
         let data = await fetch(url)
         let parsedData = await data.json()

@@ -26,3 +26,5 @@ I used the above link to get the API and Iused the data given in json format in 
 - The functions created for next and previous button are `handleNextClick()` and `handelPrevClick` respectively.
 
 6. Loading Spinner added using some logic
+
+7. Adding category, country and pageSize as props in URL
