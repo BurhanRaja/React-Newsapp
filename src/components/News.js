@@ -10,7 +10,6 @@ export class News extends Component {
         country: "in",
         pageSize: 6,
         category: "general",
-        categoryName: "General"
     }
 
     // Type of Props
@@ -21,18 +20,24 @@ export class News extends Component {
     }
 
     // Handling States
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             articles: [],
             loading: false,
             page: 1
         }
+
+        document.title = `${this.capitalizeFirstLetter(this.props.category)} - NewsMonkey`
     }
 
-    // Fetching API
-    async componentDidMount() {
-        const url = `http://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=apikey&page=1&pageSize=${this.props.pageSize}`
+    // To Capitalize the title and heading
+    capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    async updateNews() {
+        const url = `http://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=apikey&page=${this.state.page}&pageSize=${this.props.pageSize}`
         this.setState({loading: true})
         let data = await fetch(url)
         let parsedData = await data.json()
@@ -43,30 +48,25 @@ export class News extends Component {
         })
     }
 
+    // Fetching API
+    async componentDidMount() {
+        this.updateNews()
+    }
+
     // Previous Button
     handlePrevClick = async () => {
-        const url = `http://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=apikey&page=${this.state.page-1}&pageSize=${this.props.pageSize}`
-        this.setState({loading: true})
-        let data = await fetch(url)
-        let parsedData = await data.json()
         this.setState({
-            page: this.state.page - 1,
-            articles: parsedData.articles,
-            loading: false
+            page: this.state.page-1
         })
+        this.updateNews(this.state.page)
     }
     
     // Next Button
     handleNextClick = async () => {
-        const url = `http://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=apikey&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
-        this.setState({loading: true})
-        let data = await fetch(url)
-        let parsedData = await data.json()
         this.setState({
-            page: this.state.page + 1,
-            articles: parsedData.articles,
-            loading: false
+            page: this.state.page+1
         })
+        this.updateNews(this.state.page)
     }
 
 
@@ -76,14 +76,14 @@ export class News extends Component {
             <div>
                 <div className="container my-5">
                     {/* Heading */}
-                    <h1 className='text-center'>NewsMonkey - <b>Top Headlines from {this.props.categoryName} News</b></h1>
+                    <h1 className='text-center'>NewsMonkey - <b> Top Headlines on {this.capitalizeFirstLetter(this.props.category)} </b></h1>
                     {this.state.loading && <Spinner/>}
                     <div className="row my-5">
                         {/* Displaying the content on the page */}
                         {!this.state.loading && this.state.articles.map((element)=>{
 
                         return <div className="col-md-4 my-3" key={element.url}>
-                                    <NewsItem title={element.title?element.title.slice(0,45):""} description={element.description?element.description.slice(0,76):""} imageUrl={element.urlToImage} newsUrl={element.url} timeDate={element.publishedAt} author={element.author?element.author:"Anonymous"} />
+                                    <NewsItem title={element.title?element.title.slice(0,45):""} description={element.description?element.description.slice(0,76):""} imageUrl={element.urlToImage} newsUrl={element.url} timeDate={element.publishedAt} author={element.author?element.author:"Anonymous"} sourceNews={element.source.name} />
                                 </div>
 
                         })}
