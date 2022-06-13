@@ -36,3 +36,7 @@ I used the above link to get the API and Iused the data given in json format in 
 - `componentDidMount()` for mounting means to define the component
 - `componentDidUpdate()` for updating
 - `componentWillMount()` for unmounting means to delete the component
+
+10. Added an Infinite Scroll in the web app
+
+- Install this to use infinite scroll ``` npm install --save react-infinite-scroll-component ```
