@@ -30,3 +30,9 @@ I used the above link to get the API and Iused the data given in json format in 
 7. Adding category, country and pageSize as props in URL
 
 8. Adding Author's name and Date & Time as a props to display on website
+
+9. Three react lifecycle methods
+
+- `componentDidMount()` for mounting means to define the component
+- `componentDidUpdate()` for updating
+- `componentWillMount()` for unmounting means to delete the component

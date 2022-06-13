@@ -37,7 +37,7 @@ export class News extends Component {
     }
 
     async updateNews() {
-        const url = `http://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=apikey&page=${this.state.page}&pageSize=${this.props.pageSize}`
+        const url = `http://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=c9466095a2a64318b0de82a3efff2cc3&page=${this.state.page}&pageSize=${this.props.pageSize}`
         this.setState({loading: true})
         let data = await fetch(url)
         let parsedData = await data.json()
@@ -76,7 +76,7 @@ export class News extends Component {
             <div>
                 <div className="container my-5">
                     {/* Heading */}
-                    <h1 className='text-center'>NewsMonkey - <b> Top Headlines on {this.capitalizeFirstLetter(this.props.category)} </b></h1>
+                    <h1 className='text-center'>NewsMonkey - <b> Top {this.capitalizeFirstLetter(this.props.category)} Headlines </b></h1>
                     {this.state.loading && <Spinner/>}
                     <div className="row my-5">
                         {/* Displaying the content on the page */}
