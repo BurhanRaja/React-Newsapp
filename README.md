@@ -40,3 +40,5 @@ I used the above link to get the API and Iused the data given in json format in 
 10. Added an Infinite Scroll in the web app
 
 - Install this to use infinite scroll ``` npm install --save react-infinite-scroll-component ```
+
+11. Added a Loading bar on the top.

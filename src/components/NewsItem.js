@@ -8,10 +8,12 @@ export class NewsItem extends Component {
         return (
             <div>
                 <div className="card">
-                    <span className="position-absolute top-0 translate-middle badge rounded-pill bg-danger" style={{left: "90%"}}>
+                    <div className='position-absolute d-flex end-0'>
+                    <span className="badge rounded-pill bg-danger">
                         {sourceNews}
                         <span className="visually-hidden">unread messages</span>
                     </span>
+                    </div>
                     <img src={imageUrl ? imageUrl : 'https://play-lh.googleusercontent.com/aCyq5_tBBCKcD5f4yuiE3kaNc1HDbPLA7Tq7PoEqBk1RVODSqJQUYpB_ekCrW23qnhw'} className="card-img-top card-image" style={{ height: "100%", width: "100%" }} alt="..." />
                     <div className="card-body">
                         <h5 className="card-title">{title}..</h5>

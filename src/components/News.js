@@ -27,7 +27,7 @@ export class News extends Component {
             articles: [],
             loading: true,
             page: 1,
-            totalResult: 0
+            totalResults: 0
         }
 
         document.title = `${this.capitalizeFirstLetter(this.props.category)} - NewsMonkey`
@@ -38,31 +38,36 @@ export class News extends Component {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
+    // Fetching API
     async updateNews() {
-        const url = `http://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=apiKey&page=${this.state.page}&pageSize=${this.props.pageSize}`
+        this.props.setProgress(10)
+        const url = `http://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=1&pageSize=${this.props.pageSize}`
         this.setState({ loading: true })
+        this.props.setProgress(30)
         let data = await fetch(url)
         let parsedData = await data.json()
+        this.props.setProgress(70)
         this.setState({
             articles: parsedData.articles,
-            totalResult: parsedData.totalResults, // passed directly in setState
+            totalResults: parsedData.totalResults,
             loading: false
         })
+        this.props.setProgress(100)
     }
 
-    // Fetching API
+    // Mounting Content on the website
     async componentDidMount() {
         this.updateNews()
     }
 
     fetchMoreData = async () => {
         this.setState({ page: this.state.page + 1 })
-        const url = `http://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=apiKey&page=${this.state.page}&pageSize=${this.props.pageSize}`
+        const url = `http://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=${this.props.apiKey}&page=${this.state.page+1}&pageSize=${this.props.pageSize}`
         let data = await fetch(url)
         let parsedData = await data.json()
         this.setState({
             articles: this.state.articles.concat(parsedData.articles),
-            totalResult: parsedData.totalResults,
+            totalResults: parsedData.totalResults,
             loading: false
         })
     };
@@ -80,21 +85,24 @@ export class News extends Component {
                 <InfiniteScroll
                     dataLength={this.state.articles.length}
                     next={this.fetchMoreData}
-                    hasMore={this.state.articles.length !== this.state.totalResult}
-                    loader={<Spinner />} >
+                    hasMore={this.state.articles.length !== this.state.totalResults}
+                    loader={<Spinner />}
+                    endMessage={
+                        <p style={{ textAlign: 'center' }}>
+                            <b>Yay! You have seen it all</b>
+                        </p>}
+                >
 
                     <div className="container">
-
                         <div className="row my-5">
 
                             {/* Displaying the content on the page */}
                             {this.state.articles.map((element) => {
-
                                 return <div className="col-md-4 my-3" key={element.url}>
                                     <NewsItem title={element.title ? element.title.slice(0, 45) : ""} description={element.description ? element.description.slice(0, 76) : ""} imageUrl={element.urlToImage} newsUrl={element.url} timeDate={element.publishedAt} author={element.author ? element.author : "Anonymous"} sourceNews={element.source.name} />
                                 </div>
-
                             })}
+
                         </div>
                     </div>
 
