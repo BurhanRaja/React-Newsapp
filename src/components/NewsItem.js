@@ -1,10 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export class NewsItem extends Component {
-    render() {
-        // De-structuring
-        // Using newsUrl becoz it is the only unique thing in the json data
-        let { title, description, imageUrl, newsUrl, timeDate, author, sourceNews} = this.props
+const NewsItem = (props) => {
+        // // De-structuring
+        // // Using newsUrl becoz it is the only unique thing in the json data
+        let { title, description, imageUrl, newsUrl, timeDate, author, sourceNews} = props
         return (
             <div>
                 <div className="card">
@@ -24,7 +23,6 @@ export class NewsItem extends Component {
                 </div>
             </div>
         )
-    }
 }
 
 export default NewsItem

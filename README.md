@@ -42,3 +42,5 @@ I used the above link to get the API and Iused the data given in json format in 
 - Install this to use infinite scroll ``` npm install --save react-infinite-scroll-component ```
 
 11. Added a Loading bar on the top.
+
+12. Refactoring the whole class based components in this project with function based components.
